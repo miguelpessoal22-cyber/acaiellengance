@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#4c1d95">
     
-    <!-- Configurações para Web App (iOS e Android) -->
+    <!-- Configurações PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Açaí Ellegance">
@@ -22,24 +22,10 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         h1, h2, h3, .brand-font { font-family: 'Fredoka', sans-serif; }
         
-        /* Fundo de ecrã para PC */
-        body {
-            background-color: #f3f4f6; /* Cinza claro padrão */
-        }
-        @media (min-width: 768px) {
-            body {
-                background-image: linear-gradient(to bottom, #e9d5ff, #f3f4f6); /* Gradiente suave no PC */
-            }
-        }
+        body { background-color: #f3f4f6; }
+        @media (min-width: 768px) { body { background-image: linear-gradient(to bottom, #e9d5ff, #f3f4f6); } }
 
-        /* Área centralizada tipo App */
-        .app-container {
-            background-color: #f9fafb;
-            min-height: 100vh;
-            box-shadow: 0 0 40px rgba(0,0,0,0.05);
-        }
-
-        /* Cores da Marca */
+        .app-container { background-color: #f9fafb; min-height: 100vh; box-shadow: 0 0 40px rgba(0,0,0,0.05); }
         .bg-acai { background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%); }
         .text-acai { color: #4c1d95; }
         
@@ -57,9 +43,7 @@
         .price-bump { animation: bump 0.2s ease-out; }
         @keyframes bump { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* Ajuste para inputs no iOS não darem zoom (tamanho 16px) */
         input, select, textarea { font-size: 16px !important; }
-
         @media print { body * { visibility: hidden; } #receipt-modal, #receipt-modal * { visibility: visible; } #receipt-modal { position: absolute; left: 0; top: 0; width: 100%; display: block !important; } .no-print { display: none !important; } }
     </style>
 </head>
@@ -76,8 +60,8 @@
                         <div id="store-indicator" class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-gray-300"></div>
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-bold text-lg leading-none text-purple-900 brand-font tracking-wide">Açaí Ellegance</span>
-                        <span id="store-status" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">Carregando...</span>
+                        <span id="header-store-name" class="font-bold text-lg leading-none text-purple-900 brand-font tracking-wide">Carregando...</span>
+                        <span id="store-status" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mt-0.5">...</span>
                     </div>
                 </div>
                 <button onclick="toggleCart(true)" class="relative group p-2.5 bg-purple-50 text-purple-700 rounded-full hover:bg-purple-100 transition-all active:bg-purple-200">
@@ -97,15 +81,15 @@
                 <span class="inline-flex items-center gap-1.5 py-1.5 px-4 rounded-full bg-gradient-to-r from-orange-500 to-pink-500 backdrop-blur-md text-white text-[10px] font-bold mb-4 shadow-lg uppercase tracking-wider transform hover:scale-105 transition-transform">
                     <i data-lucide="sparkles" class="w-3 h-3 fill-current"></i> O Melhor da Cidade
                 </span>
-                <h1 class="text-4xl md:text-5xl font-black mb-3 drop-shadow-xl brand-font tracking-tight">Escolha seu açaí</h1>
-                <p class="text-purple-100 font-medium text-sm opacity-95 max-w-md mx-auto">Cremoso, fresco e montado do seu jeito.</p>
+                <h1 id="hero-title" class="text-4xl md:text-5xl font-black mb-3 drop-shadow-xl brand-font tracking-tight">Escolha seu açaí</h1>
+                <p id="hero-subtitle" class="text-purple-100 font-medium text-sm opacity-95 max-w-md mx-auto">Cremoso, fresco e montado do seu jeito.</p>
             </div>
         </section>
 
         <!-- Conteúdo Principal -->
         <main class="px-4 relative z-20 space-y-10">
             
-            <!-- SEÇÃO 1: TRADICIONAIS -->
+            <!-- TRADICIONAIS -->
             <section>
                 <div class="flex items-center gap-3 mb-5 px-1">
                     <div class="bg-purple-100 text-purple-700 w-10 h-10 rounded-2xl flex items-center justify-center font-black text-lg shadow-sm transform -rotate-3">1</div>
@@ -114,18 +98,10 @@
                         <p class="text-sm text-slate-500 mt-1 font-medium">Sabores clássicos que todo mundo ama</p>
                     </div>
                 </div>
-                
-                <div id="traditional-container" class="grid gap-4">
-                    <div class="bg-white p-8 rounded-2xl text-center shadow-sm border border-slate-100">
-                        <div class="animate-pulse flex flex-col items-center gap-3">
-                            <div class="h-4 w-32 bg-slate-200 rounded"></div>
-                            <div class="h-3 w-48 bg-slate-100 rounded"></div>
-                        </div>
-                    </div>
-                </div>
+                <div id="traditional-container" class="grid gap-4"></div>
             </section>
 
-            <!-- SEÇÃO 2: GOURMET -->
+            <!-- GOURMET -->
             <section>
                 <div class="flex items-center gap-3 mb-5 px-1">
                     <div class="bg-pink-100 text-pink-600 w-10 h-10 rounded-2xl flex items-center justify-center font-black text-lg shadow-sm transform rotate-3">2</div>
@@ -134,14 +110,7 @@
                         <p class="text-sm text-slate-500 mt-1 font-medium">Com Mousse e ingredientes premium</p>
                     </div>
                 </div>
-
-                <div id="gourmet-container" class="grid gap-4">
-                    <div class="bg-white p-8 rounded-2xl text-center shadow-sm border border-slate-100">
-                        <div class="animate-pulse flex flex-col items-center gap-3">
-                            <div class="h-4 w-32 bg-slate-200 rounded"></div>
-                        </div>
-                    </div>
-                </div>
+                <div id="gourmet-container" class="grid gap-4"></div>
             </section>
 
             <!-- Observações -->
@@ -163,38 +132,28 @@
         <div class="fixed bottom-0 left-0 right-0 z-30 flex justify-center w-full pointer-events-none">
             <div class="w-full max-w-md bg-white/90 backdrop-blur-xl border-t border-slate-200 shadow-[0_-10px_30px_rgba(0,0,0,0.08)] p-4 pointer-events-auto">
                 <div class="flex items-center justify-between gap-4">
-                    <!-- Controle de Quantidade -->
                     <div class="flex items-center bg-slate-100 rounded-2xl h-14 px-2 shadow-inner ring-1 ring-slate-200">
                         <button onclick="changeQty(-1)" class="w-10 h-full text-slate-400 hover:text-purple-600 font-bold text-xl active:scale-90 transition flex items-center justify-center rounded-l-xl">-</button>
                         <span id="qty-display" class="w-6 text-center font-bold text-slate-800 text-lg">1</span>
                         <button onclick="changeQty(1)" class="w-10 h-full text-slate-400 hover:text-purple-600 font-bold text-xl active:scale-90 transition flex items-center justify-center rounded-r-xl">+</button>
                     </div>
-
-                    <!-- Botão Adicionar -->
                     <button onclick="addToCart()" id="add-btn" class="flex-1 bg-acai text-white h-14 rounded-2xl font-bold flex items-center justify-between px-5 shadow-lg shadow-purple-500/30 active:scale-[0.98] transition-all disabled:opacity-50 disabled:grayscale disabled:shadow-none hover:shadow-xl group">
-                        <span class="flex flex-col items-start leading-none">
-                            <span class="text-[10px] opacity-90 font-medium uppercase tracking-wide">Adicionar</span>
-                            <span class="text-base">ao Carrinho</span>
-                        </span>
+                        <span class="flex flex-col items-start leading-none"><span class="text-[10px] opacity-90 font-medium uppercase tracking-wide">Adicionar</span><span class="text-base">ao Carrinho</span></span>
                         <span id="current-price-display" class="bg-white/20 px-3 py-1.5 rounded-lg text-sm font-black backdrop-blur-sm group-hover:bg-white/30 transition border border-white/10">R$ 0,00</span>
                     </button>
                 </div>
             </div>
         </div>
 
-    </div> <!-- Fim App Container -->
+    </div>
 
-    <!-- Carrinho Overlay (Tela Cheia em Mobile) -->
+    <!-- Carrinho Overlay -->
     <div id="cart-overlay" class="fixed inset-0 bg-slate-900/60 z-50 invisible opacity-0 transition-all duration-300 backdrop-blur-sm flex justify-end" onclick="toggleCart(false)">
         <div id="cart-panel" class="w-full max-w-md bg-white shadow-2xl translate-x-full cart-transition flex flex-col h-full" onclick="event.stopPropagation()">
             <div class="p-6 bg-acai text-white flex justify-between items-center shadow-lg relative overflow-hidden shrink-0">
                 <div class="absolute inset-0 bg-gradient-to-br from-purple-800 to-purple-900"></div>
-                <div class="absolute -right-6 -top-6 bg-white/10 w-32 h-32 rounded-full blur-2xl"></div>
                 <div class="relative z-10 w-full flex justify-between items-center">
-                    <div>
-                        <h3 class="text-xl font-bold flex items-center gap-2">Seu Pedido</h3>
-                        <p class="text-xs text-purple-200 opacity-90">Revise seus itens abaixo</p>
-                    </div>
+                    <div><h3 class="text-xl font-bold flex items-center gap-2">Seu Pedido</h3><p class="text-xs text-purple-200 opacity-90">Revise seus itens</p></div>
                     <button onclick="toggleCart(false)" class="p-2 bg-white/10 hover:bg-white/20 rounded-full transition"><i data-lucide="x" class="w-6 h-6"></i></button>
                 </div>
             </div>
@@ -202,82 +161,43 @@
             <div class="flex-grow overflow-y-auto bg-slate-50 p-4 pb-32">
                 <div id="cart-list" class="space-y-3"></div>
                 
-                <!-- Formulário -->
                 <div id="customer-form" class="mt-6 bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hidden">
-                    <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2 border-b border-slate-100 pb-3">
-                        <span class="bg-purple-100 text-purple-700 p-1.5 rounded-lg"><i data-lucide="user" class="w-4 h-4"></i></span>
-                        Seus Dados
-                    </h4>
+                    <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2 border-b border-slate-100 pb-3"><span class="bg-purple-100 text-purple-700 p-1.5 rounded-lg"><i data-lucide="user" class="w-4 h-4"></i></span> Seus Dados</h4>
                     <div class="space-y-4">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Seu Nome</label>
-                            <input type="text" id="client-name" class="w-full mt-1 p-3 border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:border-purple-500 focus:bg-white transition-colors text-base" placeholder="Como podemos te chamar?">
-                        </div>
+                        <div><label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Seu Nome</label><input type="text" id="client-name" class="w-full mt-1 p-3 border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:border-purple-500 focus:bg-white transition-colors text-base" placeholder="Como podemos te chamar?"></div>
                         <div>
                             <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Entrega</label>
                             <div class="grid grid-cols-2 gap-3 mt-1">
-                                <label class="cursor-pointer relative">
-                                    <input type="radio" name="delivery-type" value="Retirada" class="peer hidden" onchange="toggleAddress(false)" checked>
-                                    <div class="p-3 text-center border-2 border-slate-100 rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-purple-50 peer-checked:border-purple-500 peer-checked:text-purple-700 transition-all flex flex-col items-center gap-1 hover:bg-slate-50 active:bg-slate-100">
-                                        <i data-lucide="store" class="w-4 h-4"></i> Retirada
-                                    </div>
-                                </label>
-                                <label class="cursor-pointer relative">
-                                    <input type="radio" name="delivery-type" value="Entrega" class="peer hidden" onchange="toggleAddress(true)">
-                                    <div class="p-3 text-center border-2 border-slate-100 rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-purple-50 peer-checked:border-purple-500 peer-checked:text-purple-700 transition-all flex flex-col items-center gap-1 hover:bg-slate-50 active:bg-slate-100">
-                                        <i data-lucide="bike" class="w-4 h-4"></i> Entrega
-                                    </div>
-                                </label>
+                                <label class="cursor-pointer relative"><input type="radio" name="delivery-type" value="Retirada" class="peer hidden" onchange="toggleAddress(false)" checked><div class="p-3 text-center border-2 border-slate-100 rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-purple-50 peer-checked:border-purple-500 peer-checked:text-purple-700 transition-all flex flex-col items-center gap-1 hover:bg-slate-50 active:bg-slate-100"><i data-lucide="store" class="w-4 h-4"></i> Retirada</div></label>
+                                <label class="cursor-pointer relative"><input type="radio" name="delivery-type" value="Entrega" class="peer hidden" onchange="toggleAddress(true)"><div class="p-3 text-center border-2 border-slate-100 rounded-xl text-sm font-bold text-slate-500 peer-checked:bg-purple-50 peer-checked:border-purple-500 peer-checked:text-purple-700 transition-all flex flex-col items-center gap-1 hover:bg-slate-50 active:bg-slate-100"><i data-lucide="bike" class="w-4 h-4"></i> Entrega</div></label>
                             </div>
                         </div>
                         <div id="address-block" class="hidden space-y-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Bairro</label>
-                                <select id="delivery-zone" class="w-full mt-1 p-3 border border-slate-200 rounded-xl bg-white text-base focus:outline-none focus:border-purple-500" onchange="renderCart()"></select>
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Endereço Completo</label>
-                                <textarea id="client-address" rows="2" class="w-full mt-1 p-3 border border-slate-200 rounded-xl bg-white text-base focus:outline-none focus:border-purple-500" placeholder="Rua, Número, Ponto de ref..."></textarea>
-                            </div>
+                            <div><label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Bairro</label><select id="delivery-zone" class="w-full mt-1 p-3 border border-slate-200 rounded-xl bg-white text-base focus:outline-none focus:border-purple-500" onchange="renderCart()"></select></div>
+                            <div><label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Endereço</label><textarea id="client-address" rows="2" class="w-full mt-1 p-3 border border-slate-200 rounded-xl bg-white text-base focus:outline-none focus:border-purple-500" placeholder="Rua, Número, Ponto de ref..."></textarea></div>
                         </div>
                         <div>
                             <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Pagamento</label>
                             <div class="relative">
                                 <i data-lucide="credit-card" class="absolute left-3 top-3.5 w-4 h-4 text-slate-400"></i>
-                                <!-- ALTERADO: Opção inicial "Selecione..." -->
                                 <select id="payment-method" class="w-full mt-1 pl-10 p-3 border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:border-purple-500 focus:bg-white text-base appearance-none" onchange="togglePayment()">
-                                    <option value="" disabled selected>Selecione a forma de pagamento...</option>
+                                    <option value="" disabled selected>Selecione...</option>
                                     <option value="Pix">Pix</option>
                                     <option value="Dinheiro">Dinheiro</option>
                                     <option value="Cartão">Cartão</option>
                                 </select>
                             </div>
                             
-                            <!-- ÁREA DO PIX -->
                             <div id="pix-container" class="hidden mt-3 p-4 bg-purple-50 border border-purple-200 rounded-xl animate-pulse-soft">
                                 <p class="text-xs font-bold text-purple-800 mb-2">Chave Pix (CNPJ):</p>
                                 <div class="flex items-center gap-2 mb-2">
                                     <input type="text" id="pix-key-display" readonly class="w-full p-2 bg-white border border-purple-200 rounded-lg text-sm font-mono text-center text-slate-600 select-all focus:outline-none">
                                     <button onclick="copyPix()" class="p-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition shadow-sm active:scale-95"><i data-lucide="copy" class="w-4 h-4"></i></button>
                                 </div>
-                                <p class="text-xs text-center text-slate-500 mb-3">Nome: <strong class="text-purple-900 uppercase">Gabriel Santana Morais</strong></p>
-                                
-                                <!-- AVISO IMPORTANTE PIX 1 -->
-                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-2 text-xs text-yellow-800 flex gap-2 items-start">
-                                    <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
-                                    <p><strong>Atenção:</strong> Por favor, certifique-se de que o nome informado no pedido é igual ao da conta bancária que fará o pagamento.</p>
-                                </div>
-
-                                <!-- AVISO IMPORTANTE PIX 2 (NOVO) -->
-                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3 text-xs text-blue-800 flex gap-2 items-start">
-                                    <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i>
-                                    <p><strong>Importante:</strong> Após pagar no App do banco, volte aqui, marque a caixa abaixo e clique em "Enviar Pedido" para finalizar no WhatsApp.</p>
-                                </div>
-
-                                <label class="flex items-center gap-2 text-sm font-bold text-slate-700 cursor-pointer p-2 hover:bg-purple-100 rounded-lg transition select-none">
-                                    <input type="checkbox" id="pix-confirmed" class="w-5 h-5 accent-purple-600 rounded cursor-pointer">
-                                    <span>Já realizei o pagamento</span>
-                                </label>
+                                <p class="text-xs text-center text-slate-500 mb-3">Nome: <strong id="pix-name-display" class="text-purple-900 uppercase">...</strong></p>
+                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-2 text-xs text-yellow-800 flex gap-2 items-start"><i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i><p id="pix-warning-display">Atenção: Confirme o titular.</p></div>
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3 text-xs text-blue-800 flex gap-2 items-start"><i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5"></i><p>1. Pague no banco. 2. Volte aqui. 3. Marque a caixa. 4. Envie o pedido.</p></div>
+                                <label class="flex items-center gap-2 text-sm font-bold text-slate-700 cursor-pointer p-2 hover:bg-purple-100 rounded-lg transition select-none"><input type="checkbox" id="pix-confirmed" class="w-5 h-5 accent-purple-600 rounded cursor-pointer"><span>Já realizei o pagamento</span></label>
                             </div>
                         </div>
                     </div>
@@ -285,159 +205,90 @@
             </div>
 
             <div class="p-6 bg-white border-t border-slate-100 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] z-10 w-full shrink-0">
-                <div class="flex justify-between items-end mb-4">
-                    <span class="text-xs font-bold text-slate-400 uppercase mb-1 block">Total Final</span>
-                    <div id="cart-total" class="text-3xl font-black text-purple-900 leading-none">R$ 0,00</div>
-                </div>
-                
-                <div class="flex gap-3">
-                    <button onclick="openReceipt()" class="p-4 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 transition"><i data-lucide="printer" class="w-6 h-6"></i></button>
-                    <button onclick="sendOrder()" id="checkout-btn" class="flex-1 bg-green-500 text-white rounded-xl font-bold shadow-lg shadow-green-200 hover:bg-green-600 flex justify-center items-center gap-2 transition active:scale-[0.98] py-4">
-                        <span>Enviar Pedido</span> <i data-lucide="send" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                <p id="closed-msg" class="text-center text-red-500 text-xs font-bold mt-3 hidden bg-red-50 py-2 rounded-lg border border-red-100">
-                    <i data-lucide="clock" class="w-3 h-3 inline mr-1"></i> Loja Fechada no Momento
-                </p>
+                <div class="flex justify-between items-end mb-4"><span class="text-xs font-bold text-slate-400 uppercase mb-1 block">Total Final</span><div id="cart-total" class="text-3xl font-black text-purple-900 leading-none">R$ 0,00</div></div>
+                <div class="flex gap-3"><button onclick="openReceipt()" class="p-4 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200"><i data-lucide="printer" class="w-6 h-6"></i></button><button onclick="sendOrder()" id="checkout-btn" class="flex-1 bg-green-500 text-white rounded-xl font-bold shadow-lg shadow-green-200 hover:bg-green-600 flex justify-center items-center gap-2 transition active:scale-[0.98] py-4"><span>Enviar Pedido</span> <i data-lucide="send" class="w-5 h-5"></i></button></div>
+                <p id="closed-msg" class="text-center text-red-500 text-xs font-bold mt-3 hidden bg-red-50 py-2 rounded-lg border border-red-100">Loja Fechada</p>
             </div>
-        </div>
-    </div>
-
-    <!-- Admin -->
-    <div id="admin-login-modal" class="fixed inset-0 z-[60] bg-black/80 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-3xl w-full max-w-sm text-center relative shadow-2xl">
-            <button onclick="document.getElementById('admin-login-modal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 p-2"><i data-lucide="x"></i></button>
-            <div class="bg-purple-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 text-purple-600">
-                <i data-lucide="shield-check" class="w-8 h-8"></i>
-            </div>
-            <h2 class="text-2xl font-bold mb-2 text-slate-800">Área do Dono</h2>
-            <p class="text-slate-500 text-sm mb-6">Digite a senha para gerenciar a loja.</p>
-            <input type="password" id="admin-pass-input" class="w-full p-4 border border-slate-200 rounded-xl mb-4 text-center text-lg focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="••••••">
-            <button onclick="verifyAdmin()" class="w-full bg-purple-600 text-white p-4 rounded-xl font-bold hover:bg-purple-700 transition shadow-lg shadow-purple-200">Entrar no Painel</button>
         </div>
     </div>
 
     <!-- Interface Admin -->
+    <div id="admin-login-modal" class="fixed inset-0 z-[60] bg-black/80 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-3xl w-full max-w-sm text-center relative shadow-2xl">
+            <button onclick="document.getElementById('admin-login-modal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400"><i data-lucide="x"></i></button>
+            <h2 class="text-2xl font-bold mb-4">Área do Dono</h2>
+            <input type="password" id="admin-pass-input" class="w-full p-4 border rounded-xl mb-4 text-center text-lg" placeholder="Senha">
+            <button onclick="verifyAdmin()" class="w-full bg-purple-600 text-white p-4 rounded-xl font-bold">Entrar</button>
+        </div>
+    </div>
+
     <div id="admin-interface" class="fixed inset-0 z-[60] bg-slate-50 hidden overflow-y-auto pb-20">
-        <div class="bg-white text-slate-800 p-4 sticky top-0 z-10 flex justify-between items-center shadow-sm border-b border-slate-100">
-            <h2 class="font-bold text-lg flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-5 h-5 text-purple-600"></i> Gestão</h2>
-            <button onclick="closeAdmin()" class="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg text-xs font-bold transition text-slate-600">FECHAR</button>
+        <div class="bg-white text-slate-800 p-4 sticky top-0 z-10 flex justify-between items-center shadow-sm">
+            <h2 class="font-bold text-lg">Gestão Completa</h2>
+            <button onclick="closeAdmin()" class="bg-slate-100 px-4 py-2 rounded-lg text-xs font-bold">FECHAR</button>
         </div>
         <div class="container mx-auto p-4 max-w-lg space-y-6">
             
+            <!-- STATUS -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="text-xs font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><i data-lucide="power" class="w-4 h-4"></i> Status da Loja</h3>
+                <h3 class="text-xs font-bold text-slate-400 uppercase mb-4">Status</h3>
                 <div class="flex gap-3">
-                    <button onclick="updateConfig({ isOpen: true })" id="adm-btn-open" class="flex-1 p-4 rounded-xl border-2 font-bold text-sm transition-all flex flex-col items-center gap-1">
-                        <i data-lucide="check-circle" class="w-6 h-6 mb-1"></i> ABRIR
-                    </button>
-                    <button onclick="updateConfig({ isOpen: false })" id="adm-btn-close" class="flex-1 p-4 rounded-xl border-2 font-bold text-sm transition-all flex flex-col items-center gap-1">
-                        <i data-lucide="x-circle" class="w-6 h-6 mb-1"></i> FECHAR
-                    </button>
+                    <button onclick="updateConfig({ isOpen: true })" id="adm-btn-open" class="flex-1 p-4 rounded-xl border-2 font-bold text-sm">ABRIR</button>
+                    <button onclick="updateConfig({ isOpen: false })" id="adm-btn-close" class="flex-1 p-4 rounded-xl border-2 font-bold text-sm">FECHAR</button>
                 </div>
             </div>
 
-            <!-- CHAVE PIX -->
+            <!-- DADOS DA LOJA (EDITAR TUDO) -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="text-xs font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><i data-lucide="qr-code" class="w-4 h-4"></i> Chave Pix da Loja</h3>
-                <div class="flex gap-2">
-                    <input id="adm-pix-key" class="flex-1 p-3 border rounded-lg text-sm focus:outline-none focus:border-purple-500" placeholder="Ex: 79999999999">
-                    <button onclick="savePixKey()" class="bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition font-bold text-sm">Salvar</button>
+                <h3 class="text-xs font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> Dados e Textos</h3>
+                <div class="space-y-3">
+                    <div><label class="text-[10px] font-bold text-slate-400">Nome da Loja (Topo)</label><input id="adm-store-name" class="w-full p-3 border rounded-lg text-sm"></div>
+                    <div><label class="text-[10px] font-bold text-slate-400">Título Principal (Hero)</label><input id="adm-hero-title" class="w-full p-3 border rounded-lg text-sm"></div>
+                    <div><label class="text-[10px] font-bold text-slate-400">Subtítulo (Hero)</label><input id="adm-hero-subtitle" class="w-full p-3 border rounded-lg text-sm"></div>
+                    <div><label class="text-[10px] font-bold text-slate-400">WhatsApp (Só números)</label><input id="adm-whatsapp" class="w-full p-3 border rounded-lg text-sm"></div>
+                    <div><label class="text-[10px] font-bold text-slate-400">Chave Pix</label><input id="adm-pix-key" class="w-full p-3 border rounded-lg text-sm"></div>
+                    <div><label class="text-[10px] font-bold text-slate-400">Nome Titular Pix</label><input id="adm-pix-name" class="w-full p-3 border rounded-lg text-sm"></div>
+                    <div><label class="text-[10px] font-bold text-slate-400">Aviso Amarelo Pix</label><textarea id="adm-pix-warning" class="w-full p-3 border rounded-lg text-sm" rows="2"></textarea></div>
+                    <button onclick="saveGeneralConfig()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold text-sm">Salvar Alterações</button>
                 </div>
-                <p class="text-[10px] text-slate-400 mt-2">Esta é a chave que aparecerá para o cliente copiar.</p>
             </div>
 
-            <!-- GERENCIAR ITENS -->
+            <!-- ITENS -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100">
-                <h3 class="text-xs font-bold text-purple-700 uppercase mb-4 flex items-center gap-2"><i data-lucide="list" class="w-4 h-4"></i> Cardápio (Itens)</h3>
+                <h3 class="text-xs font-bold text-purple-700 uppercase mb-4">Cardápio</h3>
                 <div id="adm-list-sizes" class="space-y-2 mb-4"></div>
-                
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase mb-3">Adicionar Novo</p>
-                    <div class="grid grid-cols-2 gap-2 mb-2">
-                        <input id="new-size-name" class="p-3 border rounded-lg text-sm w-full focus:outline-none focus:border-purple-500" placeholder="Nome (ex: Paçoca)">
-                        <input id="new-size-price" type="number" step="0.50" class="p-3 border rounded-lg text-sm w-full focus:outline-none focus:border-purple-500" placeholder="Preço (R$)">
-                    </div>
-                    <textarea id="new-size-desc" class="w-full p-3 border rounded-lg text-sm mb-2 focus:outline-none focus:border-purple-500" placeholder="Ingredientes (ex: Açaí, leite em pó...)"></textarea>
-                    <div class="flex gap-2">
-                        <select id="new-size-cat" class="p-3 border rounded-lg text-sm flex-1 bg-white focus:outline-none focus:border-purple-500">
-                            <option value="Tradicional">Tradicional</option>
-                            <option value="Gourmet">Gourmet</option>
-                        </select>
-                        <button onclick="addNewSize()" class="bg-purple-600 text-white px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-purple-700 transition shadow-lg shadow-purple-200"><i data-lucide="plus" class="w-4 h-4"></i> Adicionar</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-                <h3 class="text-xs font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> Taxas de Entrega</h3>
-                <div id="adm-list-zones" class="space-y-2 mb-3"></div>
-                <div class="flex gap-2">
-                    <input id="new-zone" class="flex-1 p-3 border rounded-lg text-sm focus:outline-none focus:border-purple-500" placeholder="Nome do Bairro">
-                    <input id="new-zone-p" type="number" class="w-24 p-3 border rounded-lg text-sm focus:outline-none focus:border-purple-500" placeholder="Valor">
-                    <button onclick="addZone()" class="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"><i data-lucide="plus" class="w-5 h-5"></i></button>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase mb-3">Novo Item</p>
+                    <div class="grid grid-cols-2 gap-2 mb-2"><input id="new-size-name" class="p-3 border rounded-lg text-sm" placeholder="Nome"><input id="new-size-price" type="number" step="0.50" class="p-3 border rounded-lg text-sm" placeholder="Preço"></div>
+                    <textarea id="new-size-desc" class="w-full p-3 border rounded-lg text-sm mb-2" placeholder="Ingredientes"></textarea>
+                    <div class="flex gap-2"><select id="new-size-cat" class="p-3 border rounded-lg text-sm flex-1"><option>Tradicional</option><option>Gourmet</option></select><button onclick="addNewSize()" class="bg-purple-600 text-white px-5 rounded-lg text-sm font-bold">Add</button></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Editar Item -->
+    <!-- Modal Editar -->
     <div id="edit-modal" class="fixed inset-0 z-[70] bg-black/80 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white p-6 rounded-2xl w-full max-w-sm shadow-2xl relative">
             <button onclick="document.getElementById('edit-modal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-red-500"><i data-lucide="x"></i></button>
-            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i data-lucide="edit-2" class="w-5 h-5 text-purple-600"></i> Editar Item</h3>
+            <h3 class="text-lg font-bold mb-4">Editar Item</h3>
             <div class="space-y-3">
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase ml-1">Nome</label>
-                    <input id="edit-name" class="w-full p-3 border rounded-lg text-base focus:border-purple-500">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase ml-1">Descrição</label>
-                    <textarea id="edit-desc" rows="2" class="w-full p-3 border rounded-lg text-base focus:border-purple-500"></textarea>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="text-xs font-bold text-slate-400 uppercase ml-1">Preço</label>
-                        <input id="edit-price" type="number" step="0.50" class="w-full p-3 border rounded-lg text-base focus:border-purple-500">
-                    </div>
-                    <div>
-                        <label class="text-xs font-bold text-slate-400 uppercase ml-1">Categoria</label>
-                        <select id="edit-cat" class="w-full p-3 border rounded-lg text-base bg-white focus:border-purple-500">
-                            <option value="Tradicional">Tradicional</option>
-                            <option value="Gourmet">Gourmet</option>
-                        </select>
-                    </div>
-                </div>
-                <button onclick="saveEditItem()" class="w-full bg-green-600 text-white p-3 rounded-lg font-bold mt-2 shadow-lg shadow-green-200">Salvar Alterações</button>
+                <input id="edit-name" class="w-full p-3 border rounded-lg text-base">
+                <textarea id="edit-desc" rows="2" class="w-full p-3 border rounded-lg text-base"></textarea>
+                <div class="grid grid-cols-2 gap-2"><input id="edit-price" type="number" step="0.50" class="w-full p-3 border rounded-lg text-base"><select id="edit-cat" class="w-full p-3 border rounded-lg text-base bg-white"><option>Tradicional</option><option>Gourmet</option></select></div>
+                <button onclick="saveEditItem()" class="w-full bg-green-600 text-white p-3 rounded-lg font-bold mt-2">Salvar</button>
             </div>
         </div>
     </div>
 
-    <!-- Comprovante -->
-    <div id="receipt-modal" class="fixed inset-0 bg-black/80 z-[100] hidden items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-2xl w-full max-w-xs font-mono text-sm relative shadow-2xl">
-            <button onclick="document.getElementById('receipt-modal').classList.add('hidden')" class="absolute top-2 right-2 font-bold p-2 text-slate-400 hover:text-red-500">X</button>
-            <div id="receipt-content" class="mb-4"></div>
-            <button onclick="window.print()" class="w-full mt-2 bg-slate-900 text-white py-3 rounded-xl font-bold no-print hover:bg-black transition">IMPRIMIR</button>
-        </div>
-    </div>
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-slate-800/90 backdrop-blur-md text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-all pointer-events-none z-[200] flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i><p class="font-bold text-sm">Atualizado!</p></div>
 
-    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-slate-800/90 backdrop-blur-md text-white px-6 py-3 rounded-full shadow-2xl opacity-0 transition-all pointer-events-none z-[200] flex items-center gap-2">
-        <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
-        <p class="font-bold text-sm">Atualizado com sucesso!</p>
-    </div>
-
-    <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, onSnapshot, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const BUSINESS_PHONE = "557998168282";
-
-        // ============================================================
-        // ⚠️ CONFIGURAÇÃO
-        // ============================================================
+        // CONFIGURAÇÃO FIREBASE
         const firebaseConfig = {
             apiKey: "COLE_A_SUA_API_KEY_AQUI", 
             authDomain: "demo.firebaseapp.com",
@@ -446,12 +297,17 @@
             messagingSenderId: "00000000",
             appId: "1:123456:web:789abc"
         };
-        // ============================================================
 
+        // Estado Inicial
         let storeConfig = { 
             isOpen: true, 
-            premiumPrice: 2.00,
-            pixKey: "5797392000139", // Chave Pix CNPJ Atualizada
+            storeName: "Açaí Ellegance",
+            heroTitle: "Escolha seu açaí",
+            heroSubtitle: "Cremoso, fresco e montado do seu jeito.",
+            phone: "557998168282",
+            pixKey: "57970392000139",
+            pixName: "Gabriel Santana Morais",
+            pixWarning: "Por favor, certifique-se de que o nome informado no pedido é igual ao da conta bancária que fará o pagamento.",
             sizes: [
                 { name: "Paçoca 300ml", description: "Açaí, paçoca, banana e leite condensado", price: 10.00, category: "Tradicional" },
                 { name: "Ninho 300ml", description: "Açaí, leite em pó, banana e leite condensado", price: 10.00, category: "Tradicional" },
@@ -464,35 +320,25 @@
                 { name: "Garrafa M&M 300ml", description: "Açaí, leite em pó, nutella e M&M", price: 13.00, category: "Gourmet" }
             ],
             deliveryZones: [
-                {name: "Aracaju", price: 0}, 
-                {name: "Barra", price: 0}, 
-                {name: "Socorro", price: 0}
+                {name: "Aracaju", price: 0}, {name: "Barra", price: 0}, {name: "Socorro", price: 0}
             ] 
         };
         
-        let cart = [];
-        let quantity = 1; 
-        let currentEditIdx = -1;
-        let isDemoMode = firebaseConfig.apiKey.includes("COLE_A_SUA");
-        let app, auth, db;
+        let cart = []; let quantity = 1; let currentEditIdx = -1; let isDemoMode = firebaseConfig.apiKey.includes("COLE_A_SUA"); let app, auth, db;
 
         async function init() {
             if (isDemoMode) {
-                console.log("Modo Demo Ativado.");
-                const savedConfig = localStorage.getItem('acai_data_v8_pix_cnpj'); 
-                if(savedConfig) storeConfig = JSON.parse(savedConfig);
+                const savedConfig = localStorage.getItem('acai_data_v11_full_control'); 
+                if(savedConfig) storeConfig = { ...storeConfig, ...JSON.parse(savedConfig) };
                 updateClientUI();
             } else {
                 try {
-                    app = initializeApp(firebaseConfig);
-                    auth = getAuth(app);
-                    db = getFirestore(app);
+                    app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app);
                     await signInAnonymously(auth);
                     const docRef = doc(db, 'loja', 'configuracao');
                     onSnapshot(docRef, (snap) => {
                         if(snap.exists()) {
-                            const data = snap.data();
-                            storeConfig = { ...storeConfig, ...data, sizes: data.sizes || storeConfig.sizes };
+                            storeConfig = { ...storeConfig, ...snap.data(), sizes: snap.data().sizes || storeConfig.sizes };
                             updateClientUI();
                             if(!document.getElementById('admin-interface').classList.contains('hidden')) updateAdminUI();
                         } else { setDoc(docRef, storeConfig); }
@@ -506,15 +352,23 @@
         async function saveData(newData) {
             if(isDemoMode) {
                 storeConfig = { ...storeConfig, ...newData };
-                localStorage.setItem('acai_data_v8_pix_cnpj', JSON.stringify(storeConfig));
+                localStorage.setItem('acai_data_v11_full_control', JSON.stringify(storeConfig));
                 updateClientUI();
                 if(!document.getElementById('admin-interface').classList.contains('hidden')) updateAdminUI();
                 showToast();
             } else { await updateDoc(doc(db, 'loja', 'configuracao'), newData); showToast(); }
         }
 
-        // ================= CLIENTE =================
+        // CLIENTE UI
         function updateClientUI() {
+            document.title = storeConfig.storeName || "Açaí Ellegance";
+            document.getElementById('header-store-name').innerText = storeConfig.storeName || "Açaí Ellegance";
+            document.getElementById('hero-title').innerText = storeConfig.heroTitle || "Escolha seu açaí";
+            document.getElementById('hero-subtitle').innerText = storeConfig.heroSubtitle || "Cremoso, fresco e montado do seu jeito.";
+            document.getElementById('pix-name-display').innerText = storeConfig.pixName || "...";
+            document.getElementById('pix-key-display').value = storeConfig.pixKey || "";
+            document.getElementById('pix-warning-display').innerHTML = `<strong>Atenção:</strong> ${storeConfig.pixWarning || "Confirme o titular."}`;
+
             const isOpen = storeConfig.isOpen;
             const statusEl = document.getElementById('store-status');
             const statusInd = document.getElementById('store-indicator');
@@ -528,7 +382,6 @@
             }
             
             document.getElementById('add-btn').disabled = !isOpen;
-            document.getElementById('checkout-btn').disabled = !isOpen;
             document.getElementById('closed-msg').classList.toggle('hidden', isOpen);
 
             renderGrid("Tradicional", "traditional-container");
@@ -539,210 +392,76 @@
             zoneSelect.innerHTML = '<option value="">Selecione seu bairro...</option>';
             (storeConfig.deliveryZones || []).forEach(z => {
                 const label = parseFloat(z.price) > 0 ? `${z.name} (+R$${z.price})` : `${z.name} (Grátis)`;
-                const opt = document.createElement('option');
-                opt.value = z.price;
-                opt.text = label;
-                opt.setAttribute('data-name', z.name);
+                const opt = document.createElement('option'); opt.value = z.price; opt.text = label; opt.setAttribute('data-name', z.name);
                 zoneSelect.appendChild(opt);
             });
             if(currentVal) zoneSelect.value = currentVal;
-            
-            // Pix Display
-            document.getElementById('pix-key-display').value = storeConfig.pixKey || "5797392000139";
             
             updateTotal();
         }
 
         function renderGrid(category, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
+            const container = document.getElementById(containerId); container.innerHTML = '';
             const items = (storeConfig.sizes || []).filter(s => s.category === category);
-
-            if(items.length === 0) {
-                container.innerHTML = `<div class="text-center text-slate-400 text-sm py-4 italic">Sem opções disponíveis.</div>`;
-                return;
-            }
-
+            if(items.length === 0) { container.innerHTML = `<div class="text-center text-slate-400 text-sm py-4 italic">Sem opções.</div>`; return; }
             items.forEach((item, index) => {
                 const label = document.createElement('label');
                 label.className = "relative flex flex-col p-5 bg-white border border-slate-100 rounded-2xl cursor-pointer hover:border-purple-300 hover:shadow-md transition-all has-[:checked]:border-purple-600 has-[:checked]:ring-1 has-[:checked]:ring-purple-600 has-[:checked]:bg-purple-50/30 group";
-                
-                label.onclick = function(e) {
-                    if (e.target.tagName === 'INPUT') {
-                        window.updateTotal();
-                        return;
-                    }
-                    e.preventDefault();
-                    const checkbox = this.querySelector('input[type="checkbox"]');
-                    checkbox.checked = !checkbox.checked;
-                    window.updateTotal();
-                };
-
-                label.innerHTML = `
-                    <div class="flex items-start gap-4 mb-3 pointer-events-none">
-                        <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform">
-                            <i data-lucide="ice-cream-2" class="w-6 h-6"></i>
-                        </div>
-                        <div class="flex-1">
-                            <span class="block font-bold text-slate-800 text-base leading-tight group-hover:text-purple-700 transition-colors">${item.name}</span>
-                            <span class="text-xs text-slate-500 block mt-1 leading-relaxed">${item.description}</span>
-                        </div>
-                    </div>
-                    <div class="mt-auto border-t border-dashed border-slate-100 pt-3 flex justify-between items-center w-full pointer-events-none">
-                        <span class="font-black text-purple-900 text-lg">R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}</span>
-                        <div class="relative">
-                            <!-- CHANGE: type="checkbox" para permitir seleção múltipla -->
-                            <input type="checkbox" name="size" value="${item.name}" data-price="${item.price}" data-desc="${item.description}" class="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded-full checked:border-purple-600 checked:bg-purple-600 transition-all">
-                            <i data-lucide="check" class="w-3 h-3 text-white absolute top-1 left-1 opacity-0 peer-checked:opacity-100"></i>
-                        </div>
-                    </div>
-                `;
-                
+                label.onclick = function(e) { if (e.target.tagName === 'INPUT') { window.updateTotal(); return; } e.preventDefault(); const checkbox = this.querySelector('input[type="checkbox"]'); checkbox.checked = !checkbox.checked; window.updateTotal(); };
+                label.innerHTML = `<div class="flex items-start gap-4 mb-3 pointer-events-none"><div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform"><i data-lucide="ice-cream-2" class="w-6 h-6"></i></div><div class="flex-1"><span class="block font-bold text-slate-800 text-base leading-tight group-hover:text-purple-700 transition-colors">${item.name}</span><span class="text-xs text-slate-500 block mt-1 leading-relaxed">${item.description}</span></div></div><div class="mt-auto border-t border-dashed border-slate-100 pt-3 flex justify-between items-center w-full pointer-events-none"><span class="font-black text-purple-900 text-lg">R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}</span><div class="relative"><input type="checkbox" name="size" value="${item.name}" data-price="${item.price}" data-desc="${item.description}" class="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded-full checked:border-purple-600 checked:bg-purple-600 transition-all"><i data-lucide="check" class="w-3 h-3 text-white absolute top-1 left-1 opacity-0 peer-checked:opacity-100"></i></div></div>`;
                 container.appendChild(label);
             });
         }
 
-        // Funções Globais
-        function changeQty(diff) {
-            quantity += diff;
-            if(quantity < 1) quantity = 1;
-            document.getElementById('qty-display').innerText = quantity;
-            updateTotal();
-        }
-        window.changeQty = changeQty;
-
         function updateTotal() {
             const sizeEls = document.querySelectorAll('input[name="size"]:checked');
             const displayEl = document.getElementById('current-price-display');
-            
-            if(sizeEls.length === 0) {
-                displayEl.innerText = "R$ 0,00";
-                return;
-            }
-            
-            let totalBase = 0;
-            sizeEls.forEach(el => {
-                totalBase += parseFloat(el.dataset.price);
-            });
-
+            if(sizeEls.length === 0) { displayEl.innerText = "R$ 0,00"; return; }
+            let totalBase = 0; sizeEls.forEach(el => totalBase += parseFloat(el.dataset.price));
             const total = totalBase * quantity;
-            
             displayEl.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            displayEl.classList.remove('price-bump');
-            void displayEl.offsetWidth; 
-            displayEl.classList.add('price-bump');
+            displayEl.classList.remove('price-bump'); void displayEl.offsetWidth; displayEl.classList.add('price-bump');
         }
         window.updateTotal = updateTotal;
+        window.changeQty = (diff) => { quantity += diff; if(quantity < 1) quantity = 1; document.getElementById('qty-display').innerText = quantity; updateTotal(); }
+        window.togglePayment = () => { const method = document.getElementById('payment-method').value; const container = document.getElementById('pix-container'); if (method === 'Pix') container.classList.remove('hidden'); else { container.classList.add('hidden'); document.getElementById('pix-confirmed').checked = false; } }
+        window.copyPix = () => { const k = document.getElementById('pix-key-display'); k.select(); k.setSelectionRange(0,99999); navigator.clipboard.writeText(k.value); alert("Chave copiada!"); }
 
-        function togglePayment() {
-            const method = document.getElementById('payment-method').value;
-            const container = document.getElementById('pix-container');
-            if (method === 'Pix') {
-                container.classList.remove('hidden');
-            } else {
-                container.classList.add('hidden');
-                document.getElementById('pix-confirmed').checked = false;
-            }
-        }
-        window.togglePayment = togglePayment;
-
-        function copyPix() {
-            const pixKey = document.getElementById('pix-key-display');
-            pixKey.select();
-            pixKey.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(pixKey.value).then(() => {
-                alert("Chave Pix copiada!");
-            });
-        }
-        window.copyPix = copyPix;
-
-        function addToCart() {
+        window.addToCart = () => {
             const sizeEls = document.querySelectorAll('input[name="size"]:checked');
             if(sizeEls.length === 0) return alert("Por favor, selecione pelo menos um item!");
-            
             const obs = document.getElementById('item-observation').value;
-
-            sizeEls.forEach(sizeEl => {
-                let unitPrice = parseFloat(sizeEl.dataset.price);
-                const desc = sizeEl.getAttribute('data-desc');
-                
-                for(let i = 0; i < quantity; i++) {
-                    cart.push({
-                        id: Date.now() + Math.random(), 
-                        size: sizeEl.value,
-                        description: desc,
-                        price: unitPrice,
-                        obs: obs
-                    });
-                }
-            });
-
-            quantity = 1;
-            document.getElementById('qty-display').innerText = 1;
-            document.getElementById('item-observation').value = '';
-            
+            sizeEls.forEach(sizeEl => { for(let i=0; i<quantity; i++) cart.push({ id: Date.now()+Math.random(), size: sizeEl.value, description: sizeEl.getAttribute('data-desc'), price: parseFloat(sizeEl.dataset.price), obs: obs }); });
+            quantity = 1; document.getElementById('qty-display').innerText = 1; document.getElementById('item-observation').value = '';
             document.querySelectorAll('input[name="size"]').forEach(el => el.checked = false);
-            
             updateClientUI(); renderCart(); toggleCart(true); showToast();
         }
-        window.addToCart = addToCart;
 
-        function renderCart() {
+        window.renderCart = () => {
             const list = document.getElementById('cart-list');
             const count = document.getElementById('cart-count');
-            count.innerText = cart.length;
-            count.classList.toggle('hidden', cart.length === 0);
-            count.classList.remove('scale-0');
-            if(cart.length === 0) setTimeout(()=>count.classList.add('scale-0'), 200);
-
-            document.getElementById('customer-form').classList.toggle('hidden', cart.length === 0);
-
-            list.innerHTML = '';
+            count.innerText = cart.length; count.classList.toggle('hidden', cart.length===0);
+            if(cart.length===0) { list.innerHTML = `<div class="text-center py-10 opacity-50"><i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-2 text-slate-300"></i><p>Seu carrinho está vazio</p></div>`; } 
+            else { list.innerHTML = ''; }
             let subtotal = 0;
-            
-            if(cart.length === 0) {
-                list.innerHTML = `<div class="text-center py-10 opacity-50"><i data-lucide="shopping-cart" class="w-12 h-12 mx-auto mb-2 text-slate-300"></i><p>Seu carrinho está vazio</p></div>`;
-            }
-
             cart.forEach(item => {
                 subtotal += item.price;
-                const div = document.createElement('div');
-                div.className = "bg-white p-4 rounded-xl border border-slate-100 shadow-sm relative group";
-                div.innerHTML = `
-                    <button onclick="removeCartItem(${item.id})" class="absolute top-3 right-3 text-slate-300 hover:text-red-500 transition-colors p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                    <div class="font-bold text-sm text-slate-800 pr-8">${item.size}</div>
-                    <div class="text-xs text-slate-400 mt-1 line-clamp-1">${item.description}</div>
-                    ${item.obs ? `<div class="text-[10px] text-orange-500 mt-2 bg-orange-50 p-1.5 rounded inline-block">Obs: ${item.obs}</div>` : ''}
-                    <div class="font-bold text-sm mt-2 text-purple-700">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
-                `;
+                const div = document.createElement('div'); div.className = "bg-white p-4 rounded-xl border border-slate-100 shadow-sm relative group";
+                div.innerHTML = `<button onclick="removeCartItem(${item.id})" class="absolute top-3 right-3 text-slate-300 hover:text-red-500 transition-colors p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button><div class="font-bold text-sm text-slate-800 pr-8">${item.size}</div><div class="text-xs text-slate-400 mt-1 line-clamp-1">${item.description}</div>${item.obs ? `<div class="text-[10px] text-orange-500 mt-2 bg-orange-50 p-1.5 rounded inline-block">Obs: ${item.obs}</div>` : ''}<div class="font-bold text-sm mt-2 text-purple-700">R$ ${item.price.toFixed(2).replace('.', ',')}</div>`;
                 list.appendChild(div);
             });
-
             let shipping = 0;
             const zoneSelect = document.getElementById('delivery-zone');
-            if(document.querySelector('input[name="delivery-type"]:checked').value === 'Entrega' && zoneSelect.value !== "") {
-                shipping = parseFloat(zoneSelect.value);
-            }
+            if(document.querySelector('input[name="delivery-type"]:checked').value === 'Entrega' && zoneSelect.value !== "") shipping = parseFloat(zoneSelect.value);
             document.getElementById('cart-total').innerText = `R$ ${(subtotal + shipping).toFixed(2).replace('.', ',')}`;
+            document.getElementById('customer-form').classList.toggle('hidden', cart.length === 0);
             lucide.createIcons();
         }
-        window.renderCart = renderCart;
+        window.removeCartItem = (id) => { cart = cart.filter(c => c.id !== id); renderCart(); }
+        window.toggleCart = (show) => { const el = document.getElementById('cart-panel'); const ov = document.getElementById('cart-overlay'); if(show) { el.classList.remove('translate-x-full'); ov.classList.remove('invisible','opacity-0'); } else { el.classList.add('translate-x-full'); ov.classList.add('opacity-0'); setTimeout(()=>ov.classList.add('invisible'), 300); } }
+        window.toggleAddress = (show) => { document.getElementById('address-block').classList.toggle('hidden', !show); renderCart(); }
 
-        function removeCartItem(id) { cart = cart.filter(c => c.id !== id); renderCart(); }
-        window.removeCartItem = removeCartItem;
-
-        function toggleCart(show) {
-            const el = document.getElementById('cart-panel');
-            const overlay = document.getElementById('cart-overlay');
-            if(show) { el.classList.remove('translate-x-full'); overlay.classList.remove('invisible', 'opacity-0'); }
-            else { el.classList.add('translate-x-full'); overlay.classList.add('opacity-0'); setTimeout(()=>overlay.classList.add('invisible'), 300); }
-        }
-        window.toggleCart = toggleCart;
-
-        function toggleAddress(show) { document.getElementById('address-block').classList.toggle('hidden', !show); renderCart(); }
-        window.toggleAddress = toggleAddress;
-
-        function sendOrder() {
+        window.sendOrder = () => {
             const name = document.getElementById('client-name').value;
             if(!name.trim()) return alert('Por favor, digite seu nome!');
             const delType = document.querySelector('input[name="delivery-type"]:checked').value;
@@ -757,187 +476,64 @@
                 const zoneName = zoneSelect.options[zoneSelect.selectedIndex].getAttribute('data-name');
                 addressInfo = `📍 *Endereço:* ${addr}\n🏘️ *Bairro:* ${zoneName}\n`;
             }
-
-            // NOVA VALIDAÇÃO DE PAGAMENTO
-            if (!paymentMethod) {
-                return alert('Por favor, selecione a forma de pagamento!');
-            }
-
-            // Validação Pix
+            if (!paymentMethod) return alert('Por favor, selecione a forma de pagamento!');
             let payText = paymentMethod;
             if(paymentMethod === 'Pix') {
-                if(!document.getElementById('pix-confirmed').checked) {
-                    return alert('Por favor, confirme que já realizou o pagamento via Pix.');
-                }
+                if(!document.getElementById('pix-confirmed').checked) return alert('Confirme que já realizou o pagamento via Pix.');
                 payText = "Pix (Confirmado no Site ✅)";
             }
-            
-            let msg = `🥤 *NOVO PEDIDO - AÇAÍ ELLEGANCE*\n\n👤 *Cliente:* ${name}\n🛵 *Tipo:* ${delType}\n${addressInfo}💳 *Pagamento:* ${payText}\n\n*ITENS DO PEDIDO:*\n`;
-            
-            cart.forEach((i, idx) => {
-                msg += `\n${idx+1}. *${i.size}*\n   📝 ${i.description}\n`;
-                if(i.obs) msg += `   👀 Obs: ${i.obs}\n`;
-                msg += `   💲 R$ ${i.price.toFixed(2).replace('.', ',')}\n`;
-            });
-            
+            let msg = `🥤 *NOVO PEDIDO - ${storeConfig.storeName.toUpperCase()}*\n\n👤 *Cliente:* ${name}\n🛵 *Tipo:* ${delType}\n${addressInfo}💳 *Pagamento:* ${payText}\n\n*ITENS DO PEDIDO:*\n`;
+            cart.forEach((i, idx) => { msg += `\n${idx+1}. *${i.size}*\n   📝 ${i.description}\n`; if(i.obs) msg += `   👀 Obs: ${i.obs}\n`; msg += `   💲 R$ ${i.price.toFixed(2).replace('.', ',')}\n`; });
             msg += `\n💰 *TOTAL FINAL:* ${document.getElementById('cart-total').innerText}`;
-            
-            const url = `https://api.whatsapp.com/send?phone=${BUSINESS_PHONE}&text=${encodeURIComponent(msg)}`;
-            window.open(url, '_blank');
-
-            // Atualiza a página após 2 segundos para limpar tudo para o próximo pedido
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            window.open(`https://api.whatsapp.com/send?phone=${storeConfig.phone}&text=${encodeURIComponent(msg)}`, '_blank');
+            setTimeout(() => window.location.reload(), 2000);
         }
-        window.sendOrder = sendOrder;
-
-        function openReceipt() {
+        window.openReceipt = () => {
             const c = document.getElementById('receipt-content');
-            let h = `<div style="text-align:center;border-bottom:1px dashed #000;padding-bottom:10px;margin-bottom:10px"><strong>AÇAÍ ELLEGANCE</strong><br><small>${new Date().toLocaleString()}</small></div><div><strong>Cliente:</strong> ${document.getElementById('client-name').value || 'Não informado'}</div><hr style="margin:5px 0; border-top: 1px dashed #000;">`;
+            let h = `<div style="text-align:center;border-bottom:1px dashed #000;padding-bottom:10px;margin-bottom:10px"><strong>${storeConfig.storeName}</strong><br><small>${new Date().toLocaleString()}</small></div><div><strong>Cliente:</strong> ${document.getElementById('client-name').value || 'Não informado'}</div><hr style="margin:5px 0; border-top: 1px dashed #000;">`;
             cart.forEach(i => h += `<div>${i.size}<br><small class="text-slate-500">${i.description}</small><div style="text-align:right">R$ ${i.price.toFixed(2).replace('.', ',')}</div></div><br>`);
             h += `<div style="text-align:right;font-weight:bold;border-top:1px dashed #000;padding-top:5px">TOTAL: ${document.getElementById('cart-total').innerText}</div>`;
-            c.innerHTML = h;
-            document.getElementById('receipt-modal').classList.remove('hidden');
+            c.innerHTML = h; document.getElementById('receipt-modal').classList.remove('hidden');
         }
-        window.openReceipt = openReceipt;
 
-        // ================= ADMIN =================
-        function verifyAdmin() {
-            if(document.getElementById('admin-pass-input').value === 'admin123') {
-                document.getElementById('admin-login-modal').classList.add('hidden');
-                document.getElementById('admin-interface').classList.remove('hidden');
-                updateAdminUI();
-            } else alert('Senha incorreta.');
+        // ADMIN LOGIC
+        window.verifyAdmin = () => { if(document.getElementById('admin-pass-input').value === 'admin123') { document.getElementById('admin-login-modal').classList.add('hidden'); document.getElementById('admin-interface').classList.remove('hidden'); updateAdminUI(); } else alert('Senha incorreta.'); }
+        window.closeAdmin = () => document.getElementById('admin-interface').classList.add('hidden');
+        
+        window.saveGeneralConfig = () => {
+            saveData({ 
+                storeName: document.getElementById('adm-store-name').value.trim(), 
+                heroTitle: document.getElementById('adm-hero-title').value.trim(),
+                heroSubtitle: document.getElementById('adm-hero-subtitle').value.trim(),
+                phone: document.getElementById('adm-whatsapp').value.trim(), 
+                pixName: document.getElementById('adm-pix-name').value.trim(),
+                pixKey: document.getElementById('adm-pix-key').value.trim(),
+                pixWarning: document.getElementById('adm-pix-warning').value.trim()
+            });
         }
-        window.verifyAdmin = verifyAdmin;
-
-        function closeAdmin() { document.getElementById('admin-interface').classList.add('hidden'); }
-        window.closeAdmin = closeAdmin;
 
         function updateAdminUI() {
-            const open = document.getElementById('adm-btn-open');
-            const close = document.getElementById('adm-btn-close');
-            if(storeConfig.isOpen) { 
-                open.className="flex-1 p-4 rounded-xl border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm flex flex-col items-center gap-1"; 
-                close.className="flex-1 p-4 rounded-xl border-2 border-slate-100 bg-white text-slate-400 font-bold text-sm flex flex-col items-center gap-1 opacity-50"; 
-            } else { 
-                open.className="flex-1 p-4 rounded-xl border-2 border-slate-100 bg-white text-slate-400 font-bold text-sm flex flex-col items-center gap-1 opacity-50"; 
-                close.className="flex-1 p-4 rounded-xl border-2 border-red-500 bg-red-50 text-red-700 font-bold text-sm flex flex-col items-center gap-1"; 
-            }
+            const open = document.getElementById('adm-btn-open'); const close = document.getElementById('adm-btn-close');
+            if(storeConfig.isOpen) { open.className="flex-1 p-4 rounded-xl border-2 border-green-500 bg-green-50 text-green-700 font-bold text-sm flex flex-col items-center gap-1"; close.className="flex-1 p-4 rounded-xl border-2 border-slate-100 bg-white text-slate-400 font-bold text-sm flex flex-col items-center gap-1 opacity-50"; } 
+            else { open.className="flex-1 p-4 rounded-xl border-2 border-slate-100 bg-white text-slate-400 font-bold text-sm flex flex-col items-center gap-1 opacity-50"; close.className="flex-1 p-4 rounded-xl border-2 border-red-500 bg-red-50 text-red-700 font-bold text-sm flex flex-col items-center gap-1"; }
             
+            document.getElementById('adm-store-name').value = storeConfig.storeName || "";
+            document.getElementById('adm-hero-title').value = storeConfig.heroTitle || "";
+            document.getElementById('adm-hero-subtitle').value = storeConfig.heroSubtitle || "";
+            document.getElementById('adm-whatsapp').value = storeConfig.phone || "";
+            document.getElementById('adm-pix-name').value = storeConfig.pixName || "";
             document.getElementById('adm-pix-key').value = storeConfig.pixKey || "";
+            document.getElementById('adm-pix-warning').value = storeConfig.pixWarning || "";
 
-            const sizesList = document.getElementById('adm-list-sizes');
-            sizesList.innerHTML = '';
-            (storeConfig.sizes || []).forEach((s, i) => {
-                sizesList.innerHTML += `
-                    <div class="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-sm group hover:border-purple-200 transition-colors">
-                        <div class="flex-1">
-                            <span class="font-bold block text-slate-800">${s.name} <span class="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded uppercase tracking-wider ml-1">${s.category || 'Geral'}</span></span>
-                            <span class="text-xs text-slate-400 mt-0.5 block">${s.description}</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="font-bold bg-purple-50 text-purple-700 px-2 py-1 rounded-lg border border-purple-100">R$${parseFloat(s.price).toFixed(2)}</span>
-                            <div class="flex gap-1">
-                                <button onclick="editItem(${i})" class="text-slate-300 hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition"><i data-lucide="edit-2" class="w-4 h-4"></i></button>
-                                <button onclick="removeAdminItem('sizes', ${i})" class="text-slate-300 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-
-            const zoneList = document.getElementById('adm-list-zones');
-            zoneList.innerHTML = '';
-            (storeConfig.deliveryZones || []).forEach((z, i) => {
-                zoneList.innerHTML += `
-                    <div class="flex justify-between bg-white p-3 rounded-xl border border-slate-100 text-sm items-center">
-                        <span class="font-medium pl-2">${z.name}</span>
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs">R$${z.price}</span>
-                            <button onclick="removeAdminItem('deliveryZones', ${i})" class="text-slate-300 hover:text-red-500 p-1"><i data-lucide="x" class="w-4 h-4"></i></button>
-                        </div>
-                    </div>`;
-            });
-            lucide.createIcons();
+            const sizesList = document.getElementById('adm-list-sizes'); sizesList.innerHTML = '';
+            (storeConfig.sizes || []).forEach((s, i) => { sizesList.innerHTML += `<div class="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-sm group hover:border-purple-200 transition-colors"><div class="flex-1"><span class="font-bold block text-slate-800">${s.name} <span class="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded uppercase tracking-wider ml-1">${s.category || 'Geral'}</span></span><span class="text-xs text-slate-400 mt-0.5 block">${s.description}</span></div><div class="flex items-center gap-3"><span class="font-bold bg-purple-50 text-purple-700 px-2 py-1 rounded-lg border border-purple-100">R$${parseFloat(s.price).toFixed(2)}</span><div class="flex gap-1"><button onclick="editItem(${i})" class="text-slate-300 hover:text-blue-500 p-2 rounded-lg hover:bg-blue-50 transition"><i data-lucide="edit-2" class="w-4 h-4"></i></button><button onclick="removeAdminItem('sizes', ${i})" class="text-slate-300 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div></div>`; });
         }
 
-        function updateConfig(data) { saveData(data); }
-        window.updateConfig = updateConfig;
-        
-        function savePixKey() { saveData({ pixKey: document.getElementById('adm-pix-key').value }); }
-        window.savePixKey = savePixKey;
-
-        function addNewSize() {
-            const name = document.getElementById('new-size-name').value.trim();
-            const desc = document.getElementById('new-size-desc').value.trim();
-            const price = parseFloat(document.getElementById('new-size-price').value);
-            const cat = document.getElementById('new-size-cat').value;
-
-            if(!name || isNaN(price)) return alert("Preencha o nome e o preço corretamente.");
-
-            const newSize = { name, description: desc, price, category: cat };
-            const list = [...(storeConfig.sizes || []), newSize];
-            saveData({ sizes: list });
-
-            document.getElementById('new-size-name').value = '';
-            document.getElementById('new-size-desc').value = '';
-            document.getElementById('new-size-price').value = '';
-        }
-        window.addNewSize = addNewSize;
-
-        function removeAdminItem(key, idx) {
-            if(!confirm('Tem certeza que deseja apagar este item?')) return;
-            const list = storeConfig[key].filter((_, i) => i !== idx);
-            const up = {}; up[key] = list;
-            saveData(up);
-        }
-        window.removeAdminItem = removeAdminItem;
-
-        // Função para Abrir Modal de Edição
-        function editItem(index) {
-            currentEditIdx = index;
-            const item = storeConfig.sizes[index];
-            
-            document.getElementById('edit-name').value = item.name;
-            document.getElementById('edit-desc').value = item.description;
-            document.getElementById('edit-price').value = item.price;
-            document.getElementById('edit-cat').value = item.category || 'Tradicional';
-            
-            document.getElementById('edit-modal').classList.remove('hidden');
-        }
-        window.editItem = editItem;
-
-        // Função para Salvar Edição
-        function saveEditItem() {
-            if(currentEditIdx === -1) return;
-            
-            const name = document.getElementById('edit-name').value.trim();
-            const desc = document.getElementById('edit-desc').value.trim();
-            const price = parseFloat(document.getElementById('edit-price').value);
-            const cat = document.getElementById('edit-cat').value;
-
-            if(!name || isNaN(price)) return alert("Dados inválidos");
-
-            const updatedSizes = [...storeConfig.sizes];
-            updatedSizes[currentEditIdx] = { name, description: desc, price, category: cat };
-            
-            saveData({ sizes: updatedSizes });
-            document.getElementById('edit-modal').classList.add('hidden');
-        }
-        window.saveEditItem = saveEditItem;
-
-        function addZone() {
-            const name = document.getElementById('new-zone').value.trim();
-            const price = parseFloat(document.getElementById('new-zone-p').value);
-            if(!name) return;
-            const list = [...(storeConfig.deliveryZones||[]), {name, price: price||0}];
-            saveData({deliveryZones: list});
-            document.getElementById('new-zone').value = '';
-            document.getElementById('new-zone-p').value = '';
-        }
-        window.addZone = addZone;
-
+        window.updateConfig = (data) => saveData(data);
+        window.addNewSize = () => { const name = document.getElementById('new-size-name').value.trim(); const desc = document.getElementById('new-size-desc').value.trim(); const price = parseFloat(document.getElementById('new-size-price').value); const cat = document.getElementById('new-size-cat').value; if(!name || isNaN(price)) return alert("Preencha corretamente."); saveData({ sizes: [...(storeConfig.sizes || []), { name, description: desc, price, category: cat }] }); document.getElementById('new-size-name').value=''; document.getElementById('new-size-desc').value=''; document.getElementById('new-size-price').value=''; }
+        window.removeAdminItem = (key, idx) => { if(!confirm('Apagar?')) return; saveData({ sizes: storeConfig.sizes.filter((_, i) => i !== idx) }); }
+        window.editItem = (index) => { currentEditIdx = index; const item = storeConfig.sizes[index]; document.getElementById('edit-name').value = item.name; document.getElementById('edit-desc').value = item.description; document.getElementById('edit-price').value = item.price; document.getElementById('edit-cat').value = item.category || 'Tradicional'; document.getElementById('edit-modal').classList.remove('hidden'); }
+        window.saveEditItem = () => { if(currentEditIdx === -1) return; const name = document.getElementById('edit-name').value.trim(); const desc = document.getElementById('edit-desc').value.trim(); const price = parseFloat(document.getElementById('edit-price').value); const cat = document.getElementById('edit-cat').value; if(!name || isNaN(price)) return alert("Inválido"); const up = [...storeConfig.sizes]; up[currentEditIdx] = { name, description: desc, price, category: cat }; saveData({ sizes: up }); document.getElementById('edit-modal').classList.add('hidden'); }
         function showToast() { const t = document.getElementById('toast'); t.classList.remove('opacity-0'); setTimeout(()=>t.classList.add('opacity-0'), 2000); }
         setInterval(() => lucide.createIcons(), 1000);
     </script>
